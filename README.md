@@ -24,3 +24,9 @@ docker exec -i mysql mysql -u root -p1234 < script/sql/init.sql
 
 3.运行 Go 服务
 go run ./cmd/server
+
+# docker 构建镜像和运行
+1. 构建镜像
+   docker build -t wallet .
+2. 运行容器，暴漏8080端口
+   docker run -p 8080:8080 wallet
