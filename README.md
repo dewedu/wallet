@@ -9,6 +9,7 @@
 │   └── service/         # 业务逻辑
 ├── data/                
 │   └── model/           # 数据存储
+├── docs/                # 接口文档
 ├── script/
 │   └── sql/
 │       └── init.sql     # 数据库初始化脚本
@@ -30,3 +31,10 @@ go run ./cmd/server
    docker build -t wallet .
 2. 运行容器，暴漏8080端口
    docker run -p 8080:8080 wallet
+
+# swagger生成接口文档
+1. 安装 swagger
+go install github.com/swaggo/swag/cmd/swag@latest
+
+2. 生成yaml格式接口文档
+swag init -g internal/handler/wallet.go -o docs  --outputTypes yaml

@@ -1,0 +1,76 @@
+definitions:
+  handler.TransferRequest:
+    properties:
+      amount:
+        description: 转出金额（分）
+        type: integer
+      from_wallet_id:
+        description: 转出钱包
+        type: integer
+      to_wallet_id:
+        description: 转入钱包
+        type: integer
+    required:
+    - amount
+    - from_wallet_id
+    - to_wallet_id
+    type: object
+info:
+  contact: {}
+paths:
+  /wallets:
+    post:
+      consumes:
+      - application/json
+      description: 创建一个新钱包并返回钱包ID
+      responses:
+        "200":
+          description: 钱包ID
+          schema:
+            format: int32
+            type: integer
+      summary: 创建钱包
+      tags:
+      - 钱包管理
+  /wallets/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 根据钱包ID查询余额
+      parameters:
+      - description: 钱包ID
+        format: int32
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: 余额(分)
+          schema:
+            format: int64
+            type: integer
+      summary: 查询钱包余额
+      tags:
+      - 钱包管理
+  /wallets/transfer:
+    post:
+      consumes:
+      - application/json
+      description: 从一个钱包向另一个钱包转账
+      parameters:
+      - description: 转账请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.TransferRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: 钱包转账
+      tags:
+      - 转账操作
+swagger: "2.0"
